@@ -8,9 +8,9 @@
   "jsnext:main": "dist/ahoy.module.js",
   "scripts": {
     "build": "yarn build:module && yarn build:umd && yarn build:umd:min",
-    "build:module": "BABEL_ENV=es NODE_ENV=es rollup -c -o dist/ahoy.module.js",
-    "build:umd": "NODE_ENV=development rollup -c -o dist/ahoy.js",
-    "build:umd:min": "NODE_ENV=production rollup -c -o dist/ahoy.min.js",
+    "build:module": "cross-env NODE_ENV=es rollup -c -o dist/ahoy.module.js",
+    "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/ahoy.js",
+    "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/ahoy.min.js",
     "lint": "eslint src",
     "test": "zuul test/ahoy_test.js",
     "test:local": "zuul --local 8080 test/ahoy_test.js"
@@ -37,6 +37,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.4",
     "eslint": "^4.18.1",
     "faux-jax": "^5.0.6",
     "js-cookie": "^2.1.3",

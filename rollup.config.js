@@ -5,7 +5,7 @@ import uglify from "rollup-plugin-uglify"
 
 const env = process.env.NODE_ENV
 const config = {
-  input: "src/ahoy.js",
+  input: "src/index.js",
   plugins: []
 }
 
