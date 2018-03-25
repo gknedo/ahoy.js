@@ -1,42 +1,10 @@
 import babel from "rollup-plugin-babel"
 import commonjs from "rollup-plugin-commonjs";
-import nodeResolve from "rollup-plugin-node-resolve"
+import pkg from "./package.json";
+import resolve from "rollup-plugin-node-resolve";
 import uglify from "rollup-plugin-uglify"
 
-const env = process.env.NODE_ENV
-const config = {
-  input: "src/index.js",
-  plugins: []
-}
-
-if (env === "es") {
-  config.output = {format: env}
-  config.external = ["object-to-formdata"]
-  config.plugins.push(
-    babel()
-  )
-}
-
-if (env === "development" || env === "production") {
-  config.output = {format: "umd", name: "ahoy"}
-  config.plugins.push(
-    nodeResolve({
-      jsnext: true
-    }),
-    commonjs(),
-    babel({
-      exclude: "node_modules/**"
-    })
-  )
-}
-
-if (env === "production") {
-  config.plugins.push(
-    uglify()
-  )
-}
-
-config.output.banner =
+const banner =
 `/*
  * Ahoy.js
  * Simple, powerful JavaScript analytics
@@ -46,4 +14,45 @@ config.output.banner =
  */
 `
 
-export default config
+export default [
+  {
+    input: "src/index.js",
+    output: {
+      name: "ahoy",
+      file: pkg.main,
+      format: "umd",
+      banner: banner
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      babel()
+    ]
+  },
+  {
+    input: "src/index.js",
+    output: {
+      name: "ahoy",
+      file: "dist/ahoy.min.js",
+      format: "umd"
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      babel(),
+      uglify()
+    ]
+  },
+  {
+    input: "src/index.js",
+    output: {
+      file: pkg.module,
+      format: "es",
+      banner: banner
+    },
+    external: ["object-to-formdata"],
+    plugins: [
+      babel()
+    ]
+  }
+];
