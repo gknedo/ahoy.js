@@ -39,6 +39,7 @@ The visit token expires after 4 hours, in which a new visit is created.  Visits 
 - visitor_token
 - referrer
 - landing_page
+- user - from client configuration
 
 The server can capture:
 
@@ -70,7 +71,7 @@ A `POST` request is sent to `/ahoy/events` with:
 The server can capture:
 
 - visit_token - from cookies
-- user - from app authentication
+- user - from visit_token
 
 As a precaution, the server should reject times that do not match:
 
@@ -98,6 +99,11 @@ And sections with:
 <div data-section="Header">
   <a href="/home">Home</a>
 </div>
+```
+
+Set the user with:
+```javascript
+ahoy.configure({userId: 123456789});
 ```
 
 These are included in event properties if set.

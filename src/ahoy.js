@@ -17,6 +17,7 @@ let config = {
   page: null,
   platform: "Web",
   useBeacon: true,
+  userId: null,
   startOnReady: true
 };
 
@@ -285,6 +286,7 @@ function createVisit() {
       let data = {
         visit_token: visitId,
         visitor_token: visitorId,
+        userId: config.userId,
         platform: config.platform,
         landing_page: window.location.href,
         screen_width: window.screen.width,
